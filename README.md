@@ -37,6 +37,8 @@ title: "The full title, as published"
 year: 2026
 date: 2026-03-01        # sorting only
 status: published       # or: preprint
+type: journal           # journal | conference | workshop — REQUIRED:
+                        # it decides the section on /papers/ and on the CV
 venue: "Full venue name"
 venue_short: "Short name shown in the index"
 selected: true          # shows on the home page
@@ -69,6 +71,10 @@ Figures are capped at 520px wide and composited with `mix-blend-mode: multiply`,
 so a figure exported on a white background sits on the paper instead of floating
 in a white box. Export figures as SVG where you can; PNG at twice the display
 width otherwise.
+
+A paper with no `type`, or an unknown one, is not lost: it shows up under an
+"Other" heading at the foot of /papers/, which is the signal to go and fix the
+front matter.
 
 ## Adding a talk or a poster
 

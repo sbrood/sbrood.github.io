@@ -6,14 +6,37 @@ description: Peer-reviewed publications and preprints by Sarah Brood.
 ---
 <div class="wrap">
   <h1 class="page-ti">Papers</h1>
-  <p class="lede">Peer-reviewed publications and preprints, newest first.</p>
+  <p class="lede">Grouped by type, newest first within each group.</p>
 
   {%- assign papers = site.papers | sort: "date" | reverse %}
-  {%- assign years = papers | group_by_exp: "p", "p.year" %}
-  <ul class="idx" style="margin-top:34px">
-    {%- for y in years %}
-    <li class="yrhead">{{ y.name }}</li>
-    {%- for p in y.items %}{% include paper-row.html paper=p noyear=true show_authors=true %}{% endfor %}
+  {%- assign cats = "journal|Journal articles,conference|Conference papers,workshop|Workshop papers" | split: "," %}
+  {%- assign shown = 0 %}
+
+  {%- for entry in cats %}
+  {%- assign pair = entry | split: "|" %}
+  {%- assign group = papers | where: "type", pair[0] %}
+  {%- if group.size > 0 %}
+  {%- assign shown = shown | plus: group.size %}
+  <div class="lab"><span>{{ pair[1] }}</span></div>
+  <ul class="idx">
+    {%- for p in group %}{% include paper-row.html paper=p show_authors=true %}{% endfor %}
+  </ul>
+  {%- endif %}
+  {%- endfor %}
+
+  {%- comment -%}
+  Safety net: a paper whose front matter has no `type`, or a type that is not
+  one of the three above, would otherwise disappear from this page without a
+  trace. It lands here instead, which makes the mistake visible.
+  {%- endcomment -%}
+  {%- if shown < papers.size %}
+  <div class="lab"><span>Other</span></div>
+  <ul class="idx">
+    {%- for p in papers %}
+    {%- unless p.type == "journal" or p.type == "conference" or p.type == "workshop" %}
+    {% include paper-row.html paper=p show_authors=true %}
+    {%- endunless %}
     {%- endfor %}
   </ul>
+  {%- endif %}
 </div>
