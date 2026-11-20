@@ -1,2 +1,20 @@
-
-<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}. {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }} <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<footer class="site-foot">
+  <div class="wrap">
+    <p>
+      <span>&copy; {{ site.time | date: "%Y" }} {{ site.author.name }}</span>
+    </p>
+  </div>
+</footer>
+<script>
+  // Reassembles every obfuscated address on the page. See _includes/email.html.
+  (function () {
+    var flip = function (s) { return s.split("").reverse().join(""); };
+    Array.prototype.forEach.call(document.querySelectorAll(".js-mail"), function (el) {
+      var u = el.getAttribute("data-u"), h = el.getAttribute("data-h");
+      if (!u || !h) return;
+      var address = flip(u) + String.fromCharCode(64) + flip(h);
+      el.textContent = address;
+      if (el.tagName === "A") el.href = "mailto:" + address;
+    });
+  })();
+</script>

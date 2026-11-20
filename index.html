@@ -1,0 +1,52 @@
+---
+layout: default
+---
+<div class="wrap">
+  {% include elsewhere.html %}
+
+  <p class="intro">Working on methods that make models better at monitoring forests from remote sensing data.</p>
+
+  <div class="sub">
+    <p>PhD student at INRIA Paris and École Normale Supérieure de Paris.</p>
+    <p>Supervised by <a href="https://irisdum.github.io/">Iris Dumeur</a> and <a href="https://scholar.google.com/citations?user=tM5-UCsAAAAJ&amp;hl=en">Jérémy Anger</a>.</p>
+    <p>Directed by <a href="https://www.di.ens.fr/~aspremon/">Alexandre d'Aspremont</a>, co-directed by <a href="https://scholar.google.fr/citations?user=PJhqfAoAAAAJ&amp;hl=fr">Philippe Ciais</a> at LSCE.</p>
+    <p>Part of the <a href="https://ai4forest.eu/">AI4Forest</a> project.</p>
+  </div>
+
+  {%- assign papers = site.papers | sort: "date" | reverse %}
+  {%- assign selected_papers = papers | where: "selected", true %}
+  {%- if selected_papers.size > 0 %}
+  <div class="lab">
+    <span>Selected publications</span>
+    <a class="all" href="{{ '/papers/' | relative_url }}">All papers &rarr;</a>
+  </div>
+  <ul class="idx">
+    {%- for p in selected_papers %}{% include paper-row.html paper=p %}{% endfor %}
+  </ul>
+  {%- endif %}
+
+  {%- assign talks = site.talks | sort: "date" | reverse %}
+  {%- assign selected_talks = talks | where: "selected", true %}
+  {%- if selected_talks.size > 0 %}
+  <div class="lab">
+    <span>Selected talks</span>
+    <a class="all" href="{{ '/activities/' | relative_url }}">All talks &rarr;</a>
+  </div>
+  <ul class="idx">
+    {%- for t in selected_talks %}{% include talk-row.html talk=t %}{% endfor %}
+  </ul>
+  {%- endif %}
+
+  {%- comment -%}
+  Edit _data/about.yml. Each line hides itself while it is empty.
+  {%- endcomment -%}
+  {%- assign research = site.data.about.research | default: "" | strip %}
+  {%- assign outside = site.data.about.outside | default: "" | strip %}
+  {%- if research != "" or outside != "" %}
+  <section class="perso">
+    <h2 class="h5">Interests</h2>
+    {%- if research != "" %}<p>{{ research }}</p>{% endif %}
+    {%- if outside != "" %}<p class="perso-else">Otherwise: {{ outside | downcase }}</p>{% endif %}
+  </section>
+  {%- endif %}
+</div>

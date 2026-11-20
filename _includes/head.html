@@ -1,21 +1,49 @@
-{% include base_path %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta charset="utf-8">
+  {%- assign page_title = page.title | default: site.title -%}
+  {%- assign desc = page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 200 -%}
 
-{% include seo.html %}
+  <title>{% if page.url == "/" %}{{ site.title }}{% else %}{{ page_title }} — {{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ desc }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  {%- comment -%}
+  Three icons on purpose: browsers that understand SVG take the first and get a
+  mark that stays sharp at any size; the others fall back to the PNG; and
+  /favicon.ico is there because browsers request that path whether or not it is
+  declared, and a 404 leaves them showing a blank page icon.
+  {%- endcomment -%}
+  <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="alternate icon" href="{{ '/assets/favicon-32.png' | relative_url }}" type="image/png" sizes="32x32">
+  <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}">
 
-<link href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ base_path }}/feed.xml{% endif %}" type="application/atom+xml" rel="alternate" title="{{ site.title }} Feed">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 
-<!-- http://t.co/dKP3o1e -->
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="{% if page.layout == 'paper' %}article{% else %}website{% endif %}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:description" content="{{ desc }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
 
-<script>
-  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
-</script>
-
-<!-- For all browsers -->
-<link rel="stylesheet" href="{{ base_path }}/assets/css/main.css">
-
-<meta http-equiv="cleartype" content="on">
+  {%- comment -%}
+  Google Scholar indexing. These tags are what gets a project page picked up and
+  attached to the right record — they are invisible and they matter.
+  {%- endcomment -%}
+  {%- if page.layout == 'paper' %}
+  <meta name="citation_title" content="{{ page.title }}">
+  {%- for a in page.citation_authors %}
+  <meta name="citation_author" content="{{ a }}">
+  {%- endfor %}
+  <meta name="citation_publication_date" content="{{ page.year }}">
+  {%- if page.venue %}
+  <meta name="citation_journal_title" content="{{ page.venue }}">
+  {%- endif %}
+  {%- if page.pdf %}
+  <meta name="citation_pdf_url" content="{{ page.pdf }}">
+  {%- endif %}
+  {%- endif %}
+</head>

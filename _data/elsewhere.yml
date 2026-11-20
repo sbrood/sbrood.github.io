@@ -1,0 +1,17 @@
+# The second header line on the home page. Order matters — it is the order
+# shown. `icon` must match a branch of _includes/icon.html, or be left out.
+- name: Scholar
+  icon: scholar
+  url: https://scholar.google.com/citations?user=dfEAHR0AAAAJ&hl=en
+
+- name: ORCID
+  icon: orcid
+  url: https://orcid.org/0009-0004-2609-6933
+
+- name: GitHub
+  icon: github
+  url: https://github.com/sbrood
+
+- name: LinkedIn
+  icon: linkedin
+  url: https://www.linkedin.com/in/sarah-brood-086931381

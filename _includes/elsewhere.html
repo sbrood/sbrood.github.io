@@ -1,0 +1,6 @@
+<div class="elsewhere">
+  {%- for link in site.data.elsewhere %}
+  <a class="e" href="{{ link.url }}"{% unless link.url contains site.url %} rel="me noopener"{% endunless %}>{% if link.icon %}{% include icon.html name=link.icon %}{% endif %}{{ link.name }}</a>
+  {%- endfor %}
+  {% include email.html link=true class="e mail" %}
+</div>

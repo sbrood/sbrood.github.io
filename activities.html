@@ -1,0 +1,62 @@
+---
+layout: default
+title: Activities
+permalink: /activities/
+redirect_from:
+  - /talks/
+description: Talks, posters, teaching and service by Sarah Brood.
+---
+<div class="wrap">
+  <h1 class="page-ti">Activities</h1>
+
+  {%- assign talks = site.talks | sort: "date" | reverse %}
+  {%- if talks.size > 0 %}
+  <div class="lab"><span>Talks &amp; posters</span></div>
+  <ul class="idx">
+    {%- for t in talks %}{% include talk-row.html talk=t %}{% endfor %}
+  </ul>
+  {%- endif %}
+
+  {%- comment -%}
+  Teaching lives here while there is one course. Once there are three or four,
+  lift this block into its own page and add it to site.nav — nothing else has
+  to change.
+  {%- endcomment -%}
+  {%- assign courses = site.teaching | sort: "date" | reverse %}
+  {%- if courses.size > 0 %}
+  <div class="lab"><span>Teaching</span></div>
+  <ul class="idx">
+    {%- for c in courses %}
+    <li class="row">
+      <span class="row-yr">{{ c.date | date: "%Y" }}</span>
+      <span class="row-main">
+        <span class="row-ti">{{ c.title }}</span>
+        <span class="row-ve">{{ c.institution }}{% if c.level %} — {{ c.level }}{% endif %}{% if c.hours %} — {{ c.hours }}{% endif %}</span>
+      </span>
+      <span class="row-lks">
+        {%- if c.materials %}<a class="lk" href="{{ c.materials | relative_url }}">Materials</a>{% endif %}
+      </span>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+
+  {%- assign service = site.data.service | sort: "date" | reverse %}
+  {%- if service.size > 0 %}
+  <div class="lab"><span>Service</span></div>
+  <ul class="idx">
+    {%- for s in service %}
+    <li class="row">
+      <span class="row-yr">{{ s.year }}</span>
+      <span class="row-main">
+        <span class="row-ti">{{ s.what }}</span>
+        {%- if s.where %}<span class="row-ve">{{ s.where }}</span>{% endif %}
+      </span>
+      <span class="row-lks">
+        {%- if s.url %}<a class="lk" href="{{ s.url }}">Link</a>{% endif %}
+      </span>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+</div>

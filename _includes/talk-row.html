@@ -1,0 +1,13 @@
+{%- assign t = include.talk -%}
+<li class="row">
+  <span class="row-yr">{{ t.date | date: "%Y" }}</span>
+  <span class="row-main">
+    <span class="row-ti">{{ t.title }}</span>
+    <span class="row-ve">{{ t.kind }} — {{ t.venue }}{% if t.location %}, {{ t.location }}{% endif %}</span>
+  </span>
+  <span class="row-lks">
+    {%- if t.slides %}<a class="lk" href="{{ t.slides | relative_url }}">Slides</a>{% endif %}
+    {%- if t.poster %}<a class="lk" href="{{ t.poster | relative_url }}">Poster</a>{% endif %}
+    {%- if t.venue_url %}<a class="lk" href="{{ t.venue_url }}">Venue</a>{% endif %}
+  </span>
+</li>

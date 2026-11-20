@@ -1,0 +1,36 @@
+# Reproducible Ruby/Jekyll toolchain for this site.
+#
+#   pixi run serve   -> build + local preview at http://127.0.0.1:4000
+#   pixi run build    -> one-off build into _site/
+#
+# Gems are installed into .pixi/bundle/, so nothing touches the system Ruby.
+
+[workspace]
+name = "sbrood-github-io"
+description = "Personal academic website (academicpages / Jekyll)"
+channels = ["conda-forge"]
+platforms = ["osx-arm64"]
+
+[dependencies]
+# github-pages pins Jekyll 3.10, which is happiest on Ruby 3.3.
+ruby = "3.3.*"
+# Needed to compile the native gems (ffi, eventmachine, ...).
+c-compiler = "*"
+cxx-compiler = "*"
+make = "*"
+pkg-config = "*"
+
+[activation.env]
+# Jekyll's SCSS converter fails on the theme's UTF-8 characters without this.
+LANG = "en_US.UTF-8"
+LC_ALL = "en_US.UTF-8"
+# Keep gems inside the project instead of the user gem dir.
+BUNDLE_PATH = ".pixi/bundle"
+# Lets jekyll-github-metadata resolve the repo without a GitHub token.
+PAGES_REPO_NWO = "sbrood/sbrood.github.io"
+
+[tasks]
+gems = { cmd = "bundle install", inputs = ["Gemfile"], outputs = ["Gemfile.lock"] }
+build = { cmd = "bundle exec jekyll build", depends-on = ["gems"] }
+serve = { cmd = "bundle exec jekyll serve --livereload", depends-on = ["gems"] }
+clean = "rm -rf _site .jekyll-cache .jekyll-metadata"

@@ -1,0 +1,14 @@
+{%- comment -%}
+The address, never written in readable order in the page source: the two halves
+are stored reversed, in separate attributes, and the "@" is added by the script
+in the footer. Readers without JavaScript see the [at] / [dot] form.
+Pass link=true to render it as a mailto link once the script has run.
+{%- endcomment -%}
+{%- assign mail_parts = site.author.email | split: "@" -%}
+{%- assign mail_user = mail_parts[0] | split: "" | reverse | join: "" -%}
+{%- assign mail_host = mail_parts[1] | split: "" | reverse | join: "" -%}
+{%- if include.link -%}
+<a class="js-mail{% if include.class %} {{ include.class }}{% endif %}" href="#" data-u="{{ mail_user }}" data-h="{{ mail_host }}">{{ mail_parts[0] | replace: ".", " [dot] " }} [at] {{ mail_parts[1] | replace: ".", " [dot] " }}</a>
+{%- else -%}
+<span class="js-mail{% if include.class %} {{ include.class }}{% endif %}" data-u="{{ mail_user }}" data-h="{{ mail_host }}">{{ mail_parts[0] | replace: ".", " [dot] " }} [at] {{ mail_parts[1] | replace: ".", " [dot] " }}</span>
+{%- endif -%}

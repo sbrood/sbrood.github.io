@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#F8F5EF"/>
+  <!-- The tree sits behind the initial, in grey, so it reads as texture at 16px
+       while the S stays the thing you recognise. -->
+  <g fill="#CFC8B8">
+    <rect x="29.5" y="36" width="5" height="23" rx="2"/>
+    <circle cx="32" cy="24" r="21"/>
+    <circle cx="14" cy="31" r="12"/>
+    <circle cx="50" cy="31" r="12"/>
+  </g>
+  <text x="32" y="51" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', Times, serif"
+        font-size="56" fill="#1A1A16">S</text>
+</svg>

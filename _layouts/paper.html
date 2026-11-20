@@ -1,0 +1,59 @@
+---
+layout: default
+---
+<div class="wrap">
+  <p class="crumb"><a href="{{ '/papers/' | relative_url }}">&larr; Papers</a></p>
+
+  <h1 class="paper-ti">{{ page.title }}</h1>
+
+  {%- if page.authors %}
+  <p class="au">{% include authors.html list=page.authors %}</p>
+  {%- endif %}
+
+  <div class="meta">
+    <span>{% if page.status == "preprint" %}Preprint{% else %}{{ page.venue }}{% endif %} &mdash; {{ page.year }}</span>
+    {%- if page.proceedings %}<a class="lk" href="{{ page.proceedings }}">Venue page</a>{% endif %}
+    {%- if page.pdf %}<a class="lk" href="{{ page.pdf }}">PDF</a>{% endif %}
+    {%- if page.arxiv %}<a class="lk" href="{{ page.arxiv }}">arXiv</a>{% endif %}
+    {%- if page.doi %}<a class="lk" href="{{ page.doi }}">DOI</a>{% endif %}
+    {%- if page.code %}<a class="lk" href="{{ page.code }}">Code</a>{% endif %}
+    {%- if page.bibtex %}<a class="lk" href="#cite">BibTeX</a>{% endif %}
+  </div>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  {%- if page.bibtex %}
+  <h2 class="h5" id="cite">Cite</h2>
+  <pre class="bib"><code id="bibtex">{{ page.bibtex | strip }}</code></pre>
+  <button class="copy" type="button" data-target="bibtex">Copy BibTeX</button>
+  <script>
+    document.querySelectorAll(".copy").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var src = document.getElementById(btn.dataset.target);
+        if (!src) return;
+        var done = function () {
+          var was = btn.textContent;
+          btn.textContent = "Copied";
+          setTimeout(function () { btn.textContent = was; }, 1600);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(src.textContent).then(done, function () {
+            selectText(src);
+          });
+        } else {
+          selectText(src);
+        }
+      });
+    });
+    function selectText(el) {
+      var r = document.createRange();
+      r.selectNodeContents(el);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+    }
+  </script>
+  {%- endif %}
+</div>

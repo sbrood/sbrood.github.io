@@ -1,0 +1,111 @@
+---
+layout: default
+---
+<div class="wrap wrap-wide cv">
+  {%- comment -%}
+  Only shown when the page is printed or turned into the PDF: the site header
+  is hidden there, and a CV without a name at the top is useless.
+  {%- endcomment -%}
+  <div class="print-head">
+    <p class="print-name">{{ site.author.name }}</p>
+    <p class="print-contact">{% include email.html %} · {{ site.url | remove: "https://" }} · ORCID 0009-0004-2609-6933</p>
+  </div>
+
+  <h1 class="page-ti">{{ page.title }}</h1>
+  <p class="cv-dl"><a href="{{ '/files/cv_sarah_brood.pdf' | relative_url }}">Download as PDF</a></p>
+
+  {%- for s in site.data.cv.sections %}
+  <section class="cv-sec">
+    <h2 class="cv-h">{{ s.title }}</h2>
+
+    {%- if s.text %}
+    <p class="cv-text">{{ s.text }}</p>
+    {%- endif %}
+
+    {%- if s.entries %}
+    {%- for e in s.entries %}
+    <div class="cv-row">
+      <div class="cv-body">
+        <p class="cv-what">{{ e.what | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+        {%- if e.where %}<p class="cv-where">{{ e.where }}</p>{% endif %}
+        {%- if e.notes %}
+        <ul class="cv-notes">
+          {%- for n in e.notes %}<li>{{ n }}</li>{% endfor %}
+        </ul>
+        {%- endif %}
+      </div>
+      <p class="cv-when">{{ e.when }}</p>
+    </div>
+    {%- endfor %}
+    {%- endif %}
+
+    {%- if s.pairs %}
+    {%- for p in s.pairs %}
+    <div class="cv-row cv-row-pair">
+      <p class="cv-label">{{ p.label }}</p>
+      <p class="cv-value">{{ p.value }}</p>
+    </div>
+    {%- endfor %}
+    {%- endif %}
+  </section>
+  {%- endfor %}
+
+  {%- comment -%}
+  Publications are grouped by type, the way a CV is read: journal articles
+  first, then conference papers, then workshop papers. A paper's `type` is in
+  its front matter; a section with nothing in it does not appear.
+  {%- endcomment -%}
+  {%- assign cv_papers = site.papers | sort: "date" | reverse %}
+  {%- assign cv_types = "journal|Journal articles,conference|Conference papers,workshop|Workshop papers" | split: "," %}
+  {%- for entry in cv_types %}
+  {%- assign pair = entry | split: "|" %}
+  {%- assign group = cv_papers | where: "type", pair[0] %}
+  {%- if group.size > 0 %}
+  <section class="cv-sec">
+    <h2 class="cv-h">{{ pair[1] }}</h2>
+    {%- for p in group %}
+    <div class="cv-row">
+      <div class="cv-body">
+        <p class="cv-what">{{ p.title }}</p>
+        <p class="cv-where">
+          {% include authors.html list=p.authors %}{% if p.venue %}. <em>{{ p.venue }}</em>{% elsif p.status == "preprint" %}. <em>Preprint, under review</em>{% endif %}
+          {%- if p.doi %} <a href="{{ p.doi }}">DOI</a>{% elsif p.arxiv %} <a href="{{ p.arxiv }}">arXiv</a>{% elsif p.proceedings and p.status != "preprint" %} <a href="{{ p.proceedings }}">Venue</a>{% endif %}
+        </p>
+      </div>
+      <p class="cv-when">{{ p.year }}</p>
+    </div>
+    {%- endfor %}
+  </section>
+  {%- endif %}
+  {%- endfor %}
+
+  <section class="cv-sec">
+    <h2 class="cv-h">Talks and posters</h2>
+    {%- assign cv_talks = site.talks | sort: "date" | reverse %}
+    {%- for t in cv_talks %}
+    <div class="cv-row">
+      <div class="cv-body">
+        <p class="cv-what">{{ t.title }}</p>
+        <p class="cv-where">{{ t.kind }} — {{ t.venue }}{% if t.location %}, {{ t.location }}{% endif %}</p>
+      </div>
+      <p class="cv-when">{{ t.date | date: "%b %Y" }}</p>
+    </div>
+    {%- endfor %}
+  </section>
+
+  {%- assign courses = site.teaching | sort: "date" | reverse %}
+  {%- if courses.size > 0 %}
+  <section class="cv-sec">
+    <h2 class="cv-h">Teaching</h2>
+    {%- for c in courses %}
+    <div class="cv-row">
+      <div class="cv-body">
+        <p class="cv-what">{{ c.title }}</p>
+        <p class="cv-where">{{ c.institution }}{% if c.level %} — {{ c.level }}{% endif %}{% if c.hours %} — {{ c.hours }}{% endif %}</p>
+      </div>
+      <p class="cv-when">{{ c.date | date: "%Y" }}</p>
+    </div>
+    {%- endfor %}
+  </section>
+  {%- endif %}
+</div>

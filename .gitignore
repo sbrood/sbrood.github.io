@@ -10,3 +10,15 @@ Gemfile.lock
 # Ingore files created by npm
 node_modules
 package-lock.json
+# Ignore the pixi environment (the lockfile IS committed)
+.pixi/
+
+# Jekyll build caches
+.jekyll-cache/
+.jekyll-metadata
+
+# macOS
+.DS_Store
+
+# Sauvegarde laissee par bin/make-cv-pdf.sh
+files/*.previous

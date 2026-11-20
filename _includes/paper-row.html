@@ -1,0 +1,21 @@
+{%- assign p = include.paper -%}
+<li class="row{% if include.noyear %} row--noyear{% endif %}">
+  {%- unless include.noyear %}
+  <span class="row-yr">{{ p.year }}</span>
+  {%- endunless %}
+  <span class="row-main">
+    <span class="row-ti">{% if p.project_page %}<a href="{{ p.url | relative_url }}">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}</span>
+    {%- if include.show_authors and p.authors %}
+    <span class="row-au">{% include authors.html list=p.authors %}</span>
+    {%- endif %}
+    <span class="row-ve">{% if p.status == "preprint" %}Preprint{% else %}{{ p.venue_short | default: p.venue }}{% endif %}</span>
+  </span>
+  <span class="row-lks">
+    {%- if p.project_page %}<a class="lk lk-pj" href="{{ p.url | relative_url }}">Project page</a>{% endif %}
+    {%- if p.pdf %}<a class="lk" href="{{ p.pdf }}">PDF</a>{% endif %}
+    {%- if p.doi %}<a class="lk" href="{{ p.doi }}">DOI</a>{% endif %}
+    {%- if p.proceedings and p.project_page != true %}<a class="lk" href="{{ p.proceedings }}">Venue</a>{% endif %}
+    {%- if p.arxiv %}<a class="lk" href="{{ p.arxiv }}">arXiv</a>{% endif %}
+    {%- if p.code %}<a class="lk" href="{{ p.code }}">Code</a>{% endif %}
+  </span>
+</li>

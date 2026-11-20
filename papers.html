@@ -1,0 +1,19 @@
+---
+layout: default
+title: Papers
+permalink: /papers/
+description: Peer-reviewed publications and preprints by Sarah Brood.
+---
+<div class="wrap">
+  <h1 class="page-ti">Papers</h1>
+  <p class="lede">Peer-reviewed publications and preprints, newest first.</p>
+
+  {%- assign papers = site.papers | sort: "date" | reverse %}
+  {%- assign years = papers | group_by_exp: "p", "p.year" %}
+  <ul class="idx" style="margin-top:34px">
+    {%- for y in years %}
+    <li class="yrhead">{{ y.name }}</li>
+    {%- for p in y.items %}{% include paper-row.html paper=p noyear=true show_authors=true %}{% endfor %}
+    {%- endfor %}
+  </ul>
+</div>

@@ -1,0 +1,22 @@
+<header class="site-head">
+  <div class="wrap head-row">
+    <span class="me">{{ site.title }}</span>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        {%- for item in site.nav %}
+        {%- comment -%}
+        "/" is a substring of every URL, so the home entry is matched exactly
+        and every other entry by prefix.
+        {%- endcomment -%}
+        {%- assign on = false -%}
+        {%- if item.url == "/" -%}
+          {%- if page.url == "/" %}{% assign on = true %}{% endif -%}
+        {%- elsif page.url contains item.url -%}
+          {%- assign on = true -%}
+        {%- endif %}
+        <li{% if on %} class="on"{% endif %}><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {%- endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>

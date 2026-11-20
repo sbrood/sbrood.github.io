@@ -1,0 +1,16 @@
+# The "Interests" block at the foot of the home page.
+# Both lines are optional — each one hides itself while it is empty, and the
+# whole section disappears if both are.
+#
+# `research` is the line you had written as "Research interests" on the old CV.
+# `outside` is written without the leading "Otherwise:" — the page adds it, and
+# lowercases what you write. Keep it to one line.
+
+research: >-
+  Machine learning for remote sensing and Earth observation, domain adaptation
+  and generalization of foundation models, climate change, social inequalities,
+  public policy.
+
+outside: >-
+  Playing music, reading essays, drinking good coffee, and spending time in
+  nature — bikepacking, running, hiking and plants

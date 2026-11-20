@@ -1,51 +1,114 @@
-# Academic Pages
+# sbrood.github.io
 
-![pages-build-deployment](https://github.com/academicpages/academicpages.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)
+Personal academic website. Plain Jekyll, no theme — every line that renders is
+in this repository.
 
-Academic Pages is a Github Pages template for academic websites.
+## Running it locally
 
-# Getting Started
+```sh
+pixi run serve     # http://localhost:4000, rebuilds on save
+pixi run build     # one-off build into _site/
+```
 
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Click the "Use this template" button in the top right.
-1. On the "New repository" page, enter your repository name as "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and add your content.
-1. Upload any files (like PDFs, .zip files, etc.) to the `files/` directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.
-1. Check status by going to the repository settings, in the "GitHub pages" section
-1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
+## Where things live
 
-See more info at https://academicpages.github.io/
+| Path | What it is |
+|---|---|
+| `_config.yml` | Site settings, navigation, collections |
+| `_layouts/` | `default` (shell), `page` (prose pages), `paper` (project pages) |
+| `_includes/` | Header, footer, the Elsewhere line, the index rows, the icons |
+| `assets/css/style.css` | The whole stylesheet. Plain CSS, no preprocessor |
+| `_papers/` | One file per publication |
+| `_talks/` | One file per talk or poster |
+| `_teaching/` | One file per course |
+| `_data/elsewhere.yml` | The links under the name on the home page |
+| `_data/about.yml` | The "Off the clock" paragraph |
+| `files/` | PDFs (CV, posters, slides, papers) |
+| `images/papers/<slug>/` | Figures for a project page |
 
-## Running Locally
+## Adding a paper
 
-When you are initially working your website, it is very useful to be able to preview the changes locally before pushing them to GitHub. To work locally you will need to:
+Create `_papers/<slug>.md`. The slug becomes the URL, so keep it short and
+stable.
 
-1. Clone the repository and made updates as detailed above.
-1. Make sure you have ruby-dev, bundler, and nodejs installed
-    
-    On most Linux distribution and [Windows Subsystem Linux](https://learn.microsoft.com/en-us/windows/wsl/about) the command is:
-    ```bash
-    sudo apt install ruby-dev ruby-bundler nodejs
-    ```
-    On MacOS the commands are:
-    ```bash
-    brew install ruby
-    brew install node
-    gem install bundler
-    ```
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
-1. Run `jekyll serve -l -H localhost` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change.
+```yaml
+---
+title: "The full title, as published"
+year: 2026
+date: 2026-03-01        # sorting only
+status: published       # or: preprint
+venue: "Full venue name"
+venue_short: "Short name shown in the index"
+selected: true          # shows on the home page
+project_page: false     # true builds a page and links to it from the index
+authors:
+  - First Author
+  - Sarah Brood         # must match site.author.name exactly to be bolded
+doi: https://doi.org/...
+arxiv: https://arxiv.org/abs/...
+code: https://github.com/...
+citation: 'The full citation string, used on the CV page.'
+---
+```
 
-If you are running on Linux it may be necessary to install some additional dependencies prior to being able to run locally: `sudo apt install build-essential gcc make`
+With `project_page: true`, also add:
 
-# Maintenance
+- `citation_authors` in `Last, First` form — this is what Google Scholar reads;
+- `bibtex: |` followed by the entry, which renders a copy-able block;
+- `sitemap: true`, so the page is offered to search engines;
+- the body of the file, in Markdown: `## Abstract`, `## Method`, and figures as
 
-Bug reports and feature requests to the template should be [submitted via GitHub](https://github.com/academicpages/academicpages.github.io/issues/new/choose). For questions concerning how to style the template, please feel free to start a [new discussion on GitHub](https://github.com/academicpages/academicpages.github.io/discussions).
+```html
+<figure class="fig">
+  <img src="{{ '/images/papers/<slug>/figure.png' | relative_url }}" alt="...">
+  <figcaption><b>Fig. 1</b> — Caption.</figcaption>
+</figure>
+```
 
-This repository was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License (see LICENSE.md). It is currently being maintained by [Robert Zupko](https://github.com/rjzupkoii) and additional maintainers would be welcomed.
+Figures are capped at 520px wide and composited with `mix-blend-mode: multiply`,
+so a figure exported on a white background sits on the paper instead of floating
+in a white box. Export figures as SVG where you can; PNG at twice the display
+width otherwise.
 
-## Bugfixes and enhancements
+## Adding a talk or a poster
 
-If you have bugfixes and enhancements that you would like to submit as a pull request, you will need to [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) this repository as opposed to using it as a template. This will also allow you to [synchronize your copy](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) of template to your fork as well.
+Create `_talks/<date>-<slug>.md`:
 
-Unfortunately, one logistical issue with a template theme like Academic Pages that makes it a little tricky to get bug fixes and updates to the core theme. If you use this template and customize it, you will probably get merge conflicts if you attempt to synchronize. If you want to save your various .yml configuration files and markdown files, you can delete the repository and fork it again. Or you can manually patch.
+```yaml
+---
+title: "Title of the talk"
+kind: Talk              # or: Poster
+date: 2026-04-01
+venue: "Conference name"     # keep it short, the location goes below
+location: "Paris, France"
+selected: true          # shows on the home page
+slides: /files/talks/....pdf   # or: poster:
+---
+```
+
+## Adding a course
+
+Create `_teaching/<slug>.md`:
+
+```yaml
+---
+title: "Course title"
+institution: "Institution"
+level: "M1"
+hours: "20h"
+date: 2026-01-01
+materials: /files/teaching/....pdf
+---
+```
+
+Teaching renders at the foot of `/talks/`. Once there are three or four courses,
+move that block into its own page and add it to `nav:` in `_config.yml` — nothing
+else has to change.
+
+## Conventions worth keeping
+
+- **No accent colour.** One ink on one paper; the only colour comes from figures.
+- **Mono for metadata, serif for reading.** Every year, venue, label and link is
+  IBM Plex Mono in small caps; everything you actually read is Newsreader.
+- **The index is a table.** It stays scannable at twenty entries, which is the
+  point.

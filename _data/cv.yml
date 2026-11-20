@@ -1,0 +1,104 @@
+# The CV, as structured data rather than a wall of markdown. Each entry can
+# carry a `when`, which is what gets pinned to the right-hand column so the
+# dates line up down the page instead of hiding inside sentences.
+#
+# Section kinds:
+#   text:    one paragraph
+#   entries: what / where / when / notes
+#   pairs:   label / value (skills, languages)
+
+sections:
+  - title: Research interests
+    text: >-
+      Machine learning for remote sensing and Earth observation, domain
+      adaptation and generalization of foundation models, climate change,
+      social inequalities, public policy.
+
+  - title: Education
+    entries:
+      - what: "Ph.D. in Computer Science"
+        where: "École Normale Supérieure – PSL, Paris (INRIA Paris & LSCE)"
+        when: "2023 – 2027"
+        notes:
+          - "Supervised by Iris Dumeur and Jérémy Anger; directed by Alexandre d'Aspremont, co-directed by Philippe Ciais (LSCE)"
+          - "Thesis: development and application of machine learning models to retrieve key land cover and forest properties from satellite observations"
+      - what: "M.Sc., Computer Science Engineering — Image & AI major"
+        where: "ENSICAEN, National Graduate School of Engineering of Caen"
+        when: "2019 – 2022"
+      - what: "Associate's Degree (DUT), Computer Science"
+        where: "University of Technology, Paris 8"
+        when: "2017 – 2019"
+
+  - title: Research & professional experience
+    entries:
+      - what: "PhD Candidate Researcher"
+        where: "INRIA Paris & LSCE"
+        when: "Nov. 2023 – present"
+        notes:
+          - "Development and application of machine learning models to retrieve key land cover and forest properties from satellite data"
+      - what: "Computer Vision Research Engineer"
+        where: "Technicolor Creative Studios, R&D"
+        when: "Jan. – Jul. 2023"
+        notes:
+          - "Image processing and machine learning algorithms for visual effects in film"
+          - "State of the art review of computer vision techniques for production use"
+      - what: "Computer Vision Research Engineer"
+        where: "MEERO, R&D — end-of-studies internship"
+        when: "Mar. – Aug. 2022"
+        notes:
+          - "Image–text retrieval on food menus: state of the art, dataset construction, fine-tuning of CLIP"
+          - "Algorithm standardisation and optimisation with ONNX"
+          - "Optimisation of a super-resolution model"
+      - what: "Research project — evaluation of topological errors in image transformations"
+        where: "GREYC Laboratory, Caen"
+        when: "Sep. 2021 – Feb. 2022"
+        notes:
+          - "Quantification of topological errors induced by image transformations"
+          - "Implementation of transformation and interpolation operators for the open-source DGtal library"
+          - "Determination of discrete topological features; implementation of a persistent homology quantization"
+      - what: "R&D Intern"
+        where: "Steinberg Media Technologies"
+        when: "Apr. – Jul. 2021"
+        notes:
+          - "State of the art on tuning algorithms for a new multi-instrument tuner"
+          - "Simultaneous polyphonic tuning of guitar strings (monophonic for other instruments)"
+          - "Prototype plug-in in C++ with the VST3 SDK"
+      - what: "Full-stack Developer Intern"
+        where: "Unkle (by Luko)"
+        when: "Apr. – Jul. 2019"
+        notes:
+          - "Back-end development, Google API and third-party API integration (Ruby)"
+
+  - title: Technical skills
+    pairs:
+      - label: Machine learning
+        value: "PyTorch, Pandas, NumPy, ONNX"
+      - label: Geospatial data
+        value: "Geopandas, GDAL, rasterio"
+      - label: Programming
+        value: "Python, C, C++, SQL, Bash"
+      - label: Image
+        value: "Image processing and synthesis, OpenCV"
+      - label: Tools
+        value: "Git, LaTeX"
+
+  - title: Languages
+    pairs:
+      - label: French
+        value: "Native speaker"
+      - label: English
+        value: "Fluent — TOEIC 960/990"
+
+  - title: Service and leadership
+    entries:
+      - what: "Lead organiser — [AI4Forest](https://ai4forest.eu/) consortium workshop, Paris session"
+        where: "Three-day programme, ~20 participants. Sole organiser: scientific programme, speakers and logistics."
+        when: "2024"
+      - what: "President, final-year students' association"
+        where: "Team leading, event organisation"
+        when: "2021 – 2022"
+      - what: "Communication officer, sports association"
+        where: "Video editing, posters, social media"
+        when: "2020 – 2021"
+      - what: "Certificate of musical studies (viola)"
+        where: "Regional Conservatory of Amiens — also piano and ukulele; University Orchestra of Caen"
